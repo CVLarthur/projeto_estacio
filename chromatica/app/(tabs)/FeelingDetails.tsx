@@ -14,7 +14,7 @@ const FeelingDetails = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const defaultLevel = { label: "Desagradável", color: "blue" };
-  const { level = defaultLevel } = route?.params || {};
+  const level = defaultLevel ;
 
   // Lista de sentimentos com base na escolha
   const feelings = {
@@ -136,7 +136,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#fff",
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
     paddingHorizontal: 10,
+    height: 460
     
   },
   feelingButton: {

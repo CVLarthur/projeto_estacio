@@ -19,7 +19,7 @@ const FeelingSelector = () => {
   ];
 
   // Retorna a cor e o rótulo com base no valor atual
-  const getLevel = (val) => {
+  const getLevel = (val: number) => {
     const index = Math.round(val);
     return levels[index];
   };
@@ -59,11 +59,11 @@ const FeelingSelector = () => {
             transform: [{ scale: animatedValue }],
           }}
         >
-          <Svg height="150" width="150"> {/* Alterar dimensões gerais para acomodar o tamanho maior */}
+          <Svg height="150" width="150"> 
             <Circle
               cx="75"
               cy="75"
-              r={50 + value * 15} // Aumenta o raio base e o multiplicador
+              r={50 + value * 15} 
               fill={currentLevel.color}
               opacity={0.8}
             />
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   nextButton: {
-    marginTop: 30,
+    marginTop: 10,
     paddingHorizontal: 30,
     width: "85%",
     backgroundColor: "#3e3e3e", // Fundo cinza

@@ -62,7 +62,6 @@ const SupportInfo = () => {
       {/* Botão Seguinte */}
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={() => navigation.navigate("NextScreen")} // Ajuste o destino conforme necessário
       >
         <Text style={styles.nextButtonText}>Seguinte</Text>
       </TouchableOpacity>
@@ -82,6 +81,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#fff",
+    marginTop: 20,
     marginBottom: 20,
   },
   contentContainer: {

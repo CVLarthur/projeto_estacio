@@ -12,7 +12,6 @@ const FeelingDetailsInput = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const defaultLevel = { label: "Desagradável", color: "blue" };
-  const { level = defaultLevel } = route?.params || {};
 
   // Estado para o texto inserido pelo usuário
   const [userInput, setUserInput] = useState("");
