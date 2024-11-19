@@ -11,7 +11,7 @@ const { width: screenWidth } = Dimensions.get('window');
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#3e3e3e', dark: '#1D3D47' }}
       headerImage={
         <Image
           source={require('@/assets/images/capa.jpg')}
@@ -20,33 +20,31 @@ export default function HomeScreen() {
       }>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Bem vindo ao Chormática!</ThemedText>
-        <HelloWave />
+        {/* <HelloWave /> */}
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
+        <ThemedText type="subtitle">Apresentação</ThemedText>
+        <ThemedText style={{textAlign:'justify'}}>
+          O Chromatica é um aplicativo  focado em saúde mental, 
+          inspirado no universo artístico e emocional do álbum Chromatica 
+          de Lady Gaga. Unindo arte, e bem-estar, 
+          o app oferece ferramentas interativas para meditação, 
+          autocuidado e reflexão emocional, ajudando você a encontrar equilíbrio em meio ao caos.
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
+        <ThemedText type="subtitle">--</ThemedText>
+        <ThemedText style={{textAlign:'justify'}}>
+        No Chromatica, acreditamos que cada pessoa tem o poder de transformar sua dor em força, 
+        assim como Gaga nos ensina através de sua jornada. 
+        Explore um espaço onde emoções são acolhidas, 
+        e a busca pela paz interior é guiada por cores, sons e experiências inspiradoras.
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+        <ThemedText type="subtitle">--</ThemedText>
+        <ThemedText style={{textAlign:'justify'}}>
+        Entre em um novo mundo, cuide da sua mente e celebre sua autenticidade com o Chromatica!
         </ThemedText>
       </ThemedView>
 
@@ -64,6 +62,7 @@ const styles = StyleSheet.create({
   stepContainer: {
     gap: 8,
     marginBottom: 8,
+    
   },
   reactLogo: {
     height: screenWidth * 250 / 420,

@@ -1,36 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import Slider from '@react-native-community/slider';
-import Svg, { Circle } from 'react-native-svg';
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native";
+import Slider from "@react-native-community/slider";
+import Svg, { Circle } from "react-native-svg";
 
 const FeelingSelector = () => {
-  const [value, setValue] = useState(0);
-  const animatedValue = new Animated.Value(1);
+  const [value, setValue] = useState(3); // Início no valor neutro (3)
+  const animatedValue = useRef(new Animated.Value(1)).current; // UseRef para manter o Animated.Value
 
-  // Função para interpolar a cor de vermelho para verde
-  const calculateColor = (val) => {
-    const red = Math.floor(255 * (1 - val));
-    const green = Math.floor(255 * val);
-    return `rgb(${red},${green},0)`;
+  // Lista de cores e níveis
+  const levels = [
+    { label: "Muito Desagradável", color: "red" },
+    { label: "Desagradável", color: "orange" },
+    { label: "Levemente Desagradável", color: "yellow" },
+    { label: "Neutro", color: "violet" },
+    { label: "Levemente Agradável", color: "blue" },
+    { label: "Agradável", color: "indigo" },
+    { label: "Muito Agradável", color: "#00ff00" },
+  ];
+
+  // Retorna a cor e o rótulo com base no valor atual
+  const getLevel = (val) => {
+    const index = Math.round(val);
+    return levels[index];
   };
 
   // Animação do círculo pulsante
   useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(animatedValue, {
-          toValue: 1.2,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-        Animated.timing(animatedValue, {
-          toValue: 1,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  }, []);
+    const startAnimation = () => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(animatedValue, {
+            toValue: 1.2,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(animatedValue, {
+            toValue: 1,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    };
+
+    startAnimation();
+  }, [animatedValue]);
+
+  const currentLevel = getLevel(value);
 
   return (
     <View style={styles.container}>
@@ -38,17 +54,17 @@ const FeelingSelector = () => {
 
       {/* Dynamic Icon */}
       <View style={styles.iconContainer}>
-        <Animated.View
+      <Animated.View
           style={{
             transform: [{ scale: animatedValue }],
           }}
         >
-          <Svg height="100" width="100">
+          <Svg height="150" width="150"> {/* Alterar dimensões gerais para acomodar o tamanho maior */}
             <Circle
-              cx="50"
-              cy="50"
-              r={30 + value * 20}
-              fill={calculateColor(value)}
+              cx="75"
+              cy="75"
+              r={50 + value * 15} // Aumenta o raio base e o multiplicador
+              fill={currentLevel.color}
               opacity={0.8}
             />
           </Svg>
@@ -56,30 +72,33 @@ const FeelingSelector = () => {
       </View>
 
       {/* Value Display */}
-      <Text style={[styles.valueText, { color: calculateColor(value) }]}>
-        {value >= 0.5 ? 'Agradável' : 'Desagradável'}
+      <Text style={[styles.valueText, { color: currentLevel.color }]}>
+        {currentLevel.label}
       </Text>
 
       {/* Slider */}
       <Slider
         style={styles.slider}
         minimumValue={0}
-        maximumValue={1}
+        maximumValue={6}
+        step={1} // Ajuste para permitir apenas valores inteiros
         value={value}
         onValueChange={(newValue) => setValue(newValue)}
-        minimumTrackTintColor={calculateColor(value)}
+        minimumTrackTintColor={currentLevel.color}
         maximumTrackTintColor="#000000"
-        thumbTintColor={calculateColor(value)}
+        thumbTintColor={currentLevel.color}
       />
 
       {/* Labels */}
       <View style={styles.labelContainer}>
+        <Text style={styles.label}>Muito Desagradável</Text>
         <Text style={styles.label}>Muito Agradável</Text>
-        <Text style={styles.label}>MUito Desagradável</Text>
       </View>
 
       {/* Próximo Button */}
-      <TouchableOpacity style={styles.nextButton} onPress={() => alert('Next button pressed!')}>
+      <TouchableOpacity
+        style={styles.nextButton}
+      >
         <Text style={styles.nextButtonText}>Próximo</Text>
       </TouchableOpacity>
     </View>
@@ -89,49 +108,62 @@ const FeelingSelector = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#3E3E3E',
-    padding: 20,
+    // justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#3E3E3E",
+    // padding: 20,
+    paddingTop: 70
   },
   title: {
-    fontSize: 18,
-    color: '#fff',
+    fontSize: 25,
+    color: "#fff",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
+    paddingTop: 50,
+    paddingBottom: 70
+
   },
   iconContainer: {
     marginBottom: 20,
   },
   valueText: {
-    fontSize: 20,
+    fontSize: 25,
     marginBottom: 20,
   },
   slider: {
-    width: '90%',
-    height: 40,
+    width: "90%",
+    height: 50,
   },
   labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "85%",
+    marginBottom: 100,
   },
   label: {
-    color: '#fff',
-    fontSize: 14,
+    color: "#fff",
+    fontSize: 15,
   },
   nextButton: {
     marginTop: 30,
-    backgroundColor: '#0000ff',
-    paddingVertical: 10,
     paddingHorizontal: 30,
+    width: "85%",
+    backgroundColor: "#3e3e3e", // Fundo cinza
     borderRadius: 25,
+    paddingVertical: 15,
+    alignItems: "center",
+    borderWidth: 2, // Adiciona borda
+    borderColor: '#0000ff', // Cor da borda com arco-íris
   },
+
+
+
   nextButtonText: {
-    color: '#000',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+ 
+    
   },
 });
 
